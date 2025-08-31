@@ -1,1 +1,16 @@
+# Sprint Plan – H2 Permeation Project  
 
+The project is organized in steps (*sprints*), where each builds on the previous one.  
+
+### Sprint 1 – Fundamentals ✅
+- Built a 1D diffusion model in Python.  
+- Produced concentration profiles and flux vs. time plots.  
+- Gained experience in monitoring and interpreting diffusion behavior.  
+
+### Sprint 2 – Operating Conditions (planned)  
+- Add effects of temperature, pressure, and permeability activation energy.  
+- Aim: move closer to conditions faced by PEMEL stacks.  
+
+### Sprint 3 – Complex Systems (future)  
+- Expand to more complex geometries and couple diffusion with electrochemical effects.  
+- Aim: connect simulations more closely with experimental degradation studies.  
