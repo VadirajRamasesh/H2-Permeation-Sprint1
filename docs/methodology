@@ -1,1 +1,14 @@
+# Methodology – H2 Permeation Sprint 1  
 
+This project models 1-D hydrogen diffusion through a flat stainless steel wall.  
+The goal is to create a simple, stable numerical simulation as the first step in a longer research path.  
+
+### Approach
+- Used Fick’s Second Law of diffusion.  
+- Applied Sieverts’ law at the boundaries (high pressure → vacuum).  
+- Implemented an explicit finite-difference scheme (FTCS).  
+- Checked stability (r ≤ 0.5) and compared results with analytical steady state.  
+
+### Why this matters
+This basic setup allows me to see how hydrogen concentration evolves with depth and time.  
+It also creates a foundation for adding more realistic conditions in future sprints.  
