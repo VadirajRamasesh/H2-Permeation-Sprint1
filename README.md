@@ -1,6 +1,6 @@
 # H2-Permeation Sprint 1
 
-This is my first sprint in a 3 step sprint process in  building a hydrogen permeation simulator which would mimic the real world conditions sytems face.  
+This is my first sprint in a 3 step sprint process in building a hydrogen permeation simulator which would mimic the real world conditions sytems face.  
 The idea is to start simple: **1-D hydrogen diffusion through a flat stainless steel wall**, using Fick’s law and Sieverts’ law as boundary conditions.  
 
 ---
