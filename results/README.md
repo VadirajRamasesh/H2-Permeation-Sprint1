@@ -1,6 +1,9 @@
 This folder shows the main outputs from Sprint 1, where I modeled hydrogen diffusion through a stainless steel wall using Fick’s law and Sieverts’ law.  
 
-The **concentration profile plot**  ![Concentration Profile](concentration_profile.png)
+The **concentration profile plot**  
+
+![Concentration Profile](Concentration%20Profile.png)
+
  shows how hydrogen spreads through the wall. At the start (t=0s) the profile is flat, but after ~43,000s it settles into a straight line, which is the classic steady-state gradient.  
 
 The **flux vs time plot** shows how the transport rate at the boundary changes over time. It starts at zero, rises steadily as hydrogen enters the wall, and then levels off toward equilibrium.  
