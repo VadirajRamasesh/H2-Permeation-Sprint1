@@ -5,6 +5,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import math
 
+
 # ---- material parameters for 316/316L stainless steel (from Sandia refs)
 R = 8.314462618              # gas constant [J/mol/K]
 PHI0, E_PHI = 2.81e-4, 62.27e3
