@@ -2,7 +2,7 @@
 
 This is my first sprint in a 3 step sprint process in building a hydrogen permeation simulator which would mimic the real world conditions sytems face.  
 About this Project. In this sprint, I built 1D Python solver for diffusion using Fick’s law with Sieverts’ 
-law as boundary conditions. This allowed me to simulate how hydrogen enters and travels through stainless steel over time. 
+law as boundary conditions. This allowed me to simulate how hydrogen enters and travels through stainless steel over time.
 
 ---
 
