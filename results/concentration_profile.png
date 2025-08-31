@@ -1,7 +1,8 @@
 
  Concentration Profile 
 
-![Concentration Profile](results/concentration_profile.png) 
+![Concentration Profile](concentration_profile.png)
+
 
  This plot shows hydrogen concentration across the wall.  
  At the start (t=0s), the profile is flat. After ~43,000s, the curve settles into a straight line,  
