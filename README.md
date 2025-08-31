@@ -29,9 +29,9 @@ The model runs and produces:
 ---
 ## Key Outcomes 
 
-Produced concentration profiles and flux trends across the wall.
+- Produced concentration profiles and flux trends across the wall.
 - Validated stability of the numerical solver against analytical steady state.
-- - Gained practical experience with time-dependent monitoring and interpretation of diffusion processes.
+- Gained practical experience with time-dependent monitoring and interpretation of diffusion processes.
 
 ### What’s next
 
