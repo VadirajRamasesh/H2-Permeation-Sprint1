@@ -1,36 +1,39 @@
-# H2-Permeation-Sprint1
+# H2-Permeation Sprint 1
 
-### Project Goal
-Hydrogen always escapes. This project builds a **1D permeation simulator** to model hydrogen diffusion through stainless steel from first principles.
-
----
-
-### What’s Inside
-- **Derivations (`/docs`)** — Fick’s Laws + Sieverts’ Law, step-by-step
-- **Code (`/code`)** — Python finite-difference (FTCS) implementation
-- **Results (`/results`)** — Plots of concentration vs depth/time
+This is my first attempt at building a hydrogen permeation simulator from scratch.  
+The idea was to start simple: **1-D hydrogen diffusion through a flat stainless steel wall**, using Fick’s law and Sieverts’ law as boundary conditions.  
 
 ---
 
-### Physics & Numerics
-- Fick’s 2nd Law: ∂C/∂t = D ∂²C/∂x²  
-- Sieverts’ Law: C ∝ √p_H₂  
-- Scheme: **FTCS** (transient diffusion), steady-state check
+### What I did
+- Implemented an explicit finite-difference solver (FTCS).
+- Applied Sieverts’ law at the boundaries (high pressure → vacuum).
+- Checked stability (r ≤ 0.5) and compared with the analytic steady state.
 
 ---
 
-### Sprint 1 Scope
-- 1D flat wall, thickness = **1 mm**  
-- Boundary conditions: high H₂ pressure on one side, **vacuum** on the other  
-- Output: concentration profile vs x and t
+### Results
+The model runs and produces:
+- Concentration profile across the wall.
+- Flux vs time at the boundary.
+
+ output:
+
+<img width="697" height="207" alt="image" src="https://github.com/user-attachments/assets/230f84dc-0a92-4c90-9e5a-4dd14ba2eebc" />
+<img width="553" height="412" alt="image" src="https://github.com/user-attachments/assets/ab54f49a-0030-48f5-824f-a54b70275c13" />
+<img width="545" height="400" alt="image" src="https://github.com/user-attachments/assets/76fd2525-9fe1-4717-b9ff-aba8edb33232" />
+
+
+
+
 
 ---
 
-### Next
-- Sprint 2: Multi-layer barrier coatings  
-- Sprint 3: Fusion-relevant H–T systems & realistic geometries
+### What’s next
+- Sprint 2: add multi-layer barrier coatings.  
+- Sprint 3: extend to fusion-relevant H–T systems and realistic geometries.  
 
 ---
 
-**Author:** Vadiraj Br — M.Sc. Hydrogen Technology,
+*Author: Vadiraja ramasesh — M.Sc. Hydrogen Technology*
 
