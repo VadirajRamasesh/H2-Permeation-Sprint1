@@ -1,29 +1,33 @@
-This folder shows the main outputs from Sprint 1, where I modeled hydrogen diffusion through a stainless steel wall using Fick’s law and Sieverts’ law.  
+---
 
-**concentration profile plot**  
+### Flux vs time (`Flux.png`)  
+![Flux](Flux.png)  
 
-![Concentration Profile](Concentration%20Profile.png)
+- Shows the transport rate at the high-pressure boundary.  
+- Flux starts near zero, rises as hydrogen enters, and levels off toward a steady plateau.  
 
- shows how hydrogen spreads through the wall. At the start (t=0s) the profile is flat, but after ~43,000s it settles into a straight line, which is the classic steady-state gradient.  
+---
 
-**flux vs time plot** 
+### Console log output (`Terminal Result.png`)  
+![Terminal Result](Terminal%20Result.png)  
 
-![Flux](Flux.png)
+- Records the parameters and numerical checks:  
+  - Grid size, timestep, stability factor (`r ≤ 0.5`)  
+  - Diffusion coefficient `D`  
+  - Boundary concentrations (from Sieverts’ law)  
+  - L² error vs the analytical steady-state profile  
+- Confirms the solver is numerically stable and convergent.  
 
-shows how the transport rate at the boundary changes over time. It starts at zero, rises steadily as hydrogen enters the wall, and then levels off toward equilibrium.  
+---
 
-I also included the Console Log Output
+### Raw numerical data (`raw_data.csv`)  
+- Contains time-resolved flux values and concentrations.  
+- Enables reproducibility of the plots and further analysis.  
 
-**console log output**
+---
 
-![Terminal Result](Terminal%20Result.png)
-
-which lists the parameters and checks used in this run. It shows the grid size, diffusion coefficient, boundary concentrations, and the stability condition (r=0.40 ≤ 0.5). The L² error compared to the analytical steady-state was ~2.5×10⁻¹⁶, confirming that the solver behaves as expected.  
-
-Finally, there is a **raw_data.csv** file with the numerical values for concentration and flux. This makes it possible to reproduce the plots or use the data for further analysis.  
-
-### Key outcomes  
-- The solver produced stable results and matched the expected steady-state behavior.  
-- The concentration profile evolves exactly as theory predicts.  
-- Flux increases with time and trends toward a plateau.  
-- These outputs give me a reliable baseline for Sprint 2, where I will add temperature and pressure effects.  
+## Key outcomes  
+- Solver produced **stable results** and matched the expected steady-state solution.  
+- The concentration profile evolved as theory predicts.  
+- Flux increased with time and approached a plateau.  
+- Provides a reliable baseline for **Sprint 2**, where temperature and pressure effects will be added.  
