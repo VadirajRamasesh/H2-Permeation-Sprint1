@@ -66,14 +66,12 @@ plt.figure()
 for t, Ck in profiles:
     plt.plot(x, Ck, label=f"t={int(t)}s")
 plt.xlabel("x [m]"); plt.ylabel("C [mol/m^3]"); plt.legend(); plt.tight_layout()
-plt.show()
+plt.savefig("profiles.png", dpi=200); plt.close()
 
 plt.figure()
 plt.plot(times, fluxL)
 plt.xlabel("time [s]"); plt.ylabel("J_left [mol/m^2/s]"); plt.tight_layout()
-plt.show()
+plt.savefig("flux_time.png", dpi=200); plt.close()
 
-# quick log
-print(f"r={r:.3f}, D={Dv:.3e} m^2/s, cL={cL:.3e}, cR={cR:.3e}, L2={l2err:.2e}")
 
 
