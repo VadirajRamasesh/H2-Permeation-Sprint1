@@ -61,11 +61,12 @@ for k in range(1, nsteps+1):
 C_ss  = cL + (cR - cL)*(x/L)
 l2err = float(np.sqrt(np.mean((C - C_ss)**2)))
 
-# plots (simple)
+# plots (save artifacts)
 plt.figure()
 for t, Ck in profiles:
     plt.plot(x, Ck, label=f"t={int(t)}s")
 plt.xlabel("x [m]"); plt.ylabel("C [mol/m^3]"); plt.legend(); plt.tight_layout()
+plt.xlim(0, 5e-6)  # zoom first 5 µm to make the boundary layer visible at 298 K
 plt.savefig("profiles.png", dpi=200); plt.close()
 
 plt.figure()
@@ -73,5 +74,6 @@ plt.plot(times, fluxL)
 plt.xlabel("time [s]"); plt.ylabel("J_left [mol/m^2/s]"); plt.tight_layout()
 plt.savefig("flux_time.png", dpi=200); plt.close()
 
+print(f"r={r:.3f}, D={Dv:.3e} m^2/s, cL={cL:.3e}, cR={cR:.3e}, L2={l2err:.2e}")
 
 
