@@ -1,28 +1,23 @@
+# Results — Sprint 1
+
+This folder contains the main outputs from **Sprint 1**, where hydrogen diffusion through a stainless steel wall was modeled using **Fick’s law** with **Sieverts’ law** boundary conditions.  
+
 ---
 
-### Flux vs time (`Flux.png`)  
-![Flux](Flux.png)  
+### Concentration profile (`profile.png`)  
+![Concentration Profile](profile.png)  
+
+- Shows how hydrogen concentration evolves across the slab.  
+- At t = 0 s the profile is flat (zero concentration).  
+- Over time, it develops into the expected **linear steady-state gradient**.  
+
+---
+
+### Flux vs time (`flux.png`)  
+![Flux](flux.png)  
 
 - Shows the transport rate at the high-pressure boundary.  
 - Flux starts near zero, rises as hydrogen enters, and levels off toward a steady plateau.  
-
----
-
-### Console log output (`Terminal Result.png`)  
-![Terminal Result](Terminal%20Result.png)  
-
-- Records the parameters and numerical checks:  
-  - Grid size, timestep, stability factor (`r ≤ 0.5`)  
-  - Diffusion coefficient `D`  
-  - Boundary concentrations (from Sieverts’ law)  
-  - L² error vs the analytical steady-state profile  
-- Confirms the solver is numerically stable and convergent.  
-
----
-
-### Raw numerical data (`raw_data.csv`)  
-- Contains time-resolved flux values and concentrations.  
-- Enables reproducibility of the plots and further analysis.  
 
 ---
 
