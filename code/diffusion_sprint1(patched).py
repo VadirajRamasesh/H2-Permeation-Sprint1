@@ -1,91 +1,79 @@
-# H2 permeation – Sprint 1 (1D diffusion baseline)
-# simple FTCS implementation with Sieverts' law boundary conditions
+# H2 permeation — Sprint 1 (1D, FTCS + Sieverts)
 
 import numpy as np
 import matplotlib.pyplot as plt
 import math
 
+# 316/316L (units: phi mol m^-1 s^-1 Pa^-0.5, S mol m^-3 Pa^-0.5)
+R = 8.314
+phi0, e_phi = 2.81e-4, 6.227e4
+s0,  e_s    = 4.88e2,  8.65e3
 
-# ---- material parameters for 316/316L stainless steel (from Sandia refs)
-R = 8.314462618              # gas constant [J/mol/K]
-PHI0, E_PHI = 2.81e-4, 62.27e3
-S0,   E_S   = 4.88e2,  8.65e3
+def phi(T): return phi0 * math.exp(-e_phi/(R*T))
+def S(T):   return s0   * math.exp(-e_s/(R*T))
+def D(T):   return phi(T) / S(T)
+def sieverts(T, p_pa):  # p in Pa
+    return S(T) * math.sqrt(p_pa if p_pa > 0.0 else 0.0)
 
-def phi_T(T):   return PHI0 * math.exp(-E_PHI/(R*T))
-def S_T(T):     return S0   * math.exp(-E_S/(R*T))
-def D_T(T):     return phi_T(T) / S_T(T)
-def sieverts(T, p):          # surface concentration from Sieverts' law
-    return S_T(T) * math.sqrt(max(p, 0.0))
+# case
+L   = 1e-3
+nx  = 201
+T   = 298
+pL_MPa, pR_MPa = 0.1, 0.0   # MPa
+t_end, snaps = 3600, 6
 
-# ---- case setup
-L   = 1e-3     # wall thickness [m]
-Nx  = 201      # grid points
-T   = 298      # temperature [K]
-pL  = 0.1      # left H2 pressure [MPa] ~1 bar
-pR  = 0.0      # right H2 pressure [MPa] vacuum
-t_end = 3600   # total time [s]
-snaps = 6      # how many profiles to save/plot
+# pressures to Pa
+pL = pL_MPa * 1e6
+pR = pR_MPa * 1e6
 
-# ---- mesh + material
-x  = np.linspace(0, L, Nx)
-dx = x[1]-x[0]
-S  = S_T(T)
-D  = D_T(T)
+# mesh + material
+x  = np.linspace(0.0, L, nx)
+dx = x[1] - x[0]
+Dv = D(T)
 cL = sieverts(T, pL)
 cR = sieverts(T, pR)
 
-# FTCS stability: r <= 0.5
-dt = 0.4 * dx*dx / D
-r  = D*dt/(dx*dx)
+# timestep (stable + enough steps)
+dt_stable = 0.4 * dx*dx / Dv
+nsteps    = max(400, int(np.ceil(t_end / dt_stable)))
+dt        = t_end / nsteps
+r         = Dv * dt / (dx*dx)   # <= 0.5
 
-# initial concentration profile (linear)
-C = np.linspace(cL, cR, Nx)
+# IC (non-steady)
+C = np.zeros(nx)
 
-nsteps   = int(np.ceil(t_end/dt))
+# store a few profiles
 save_ids = np.unique(np.round(np.linspace(0, nsteps, snaps)).astype(int))
+times = np.linspace(0.0, t_end, nsteps+1)
 profiles = [(0.0, C.copy())]
-times    = np.linspace(0, nsteps*dt, nsteps+1)
-fluxL    = np.zeros(nsteps+1)
+fluxL = np.zeros(nsteps+1)
 
-def ftcs(C, r, cL, cR):
-    Cn = C
-    C2 = Cn.copy()
-    C2[1:-1] = Cn[1:-1] + r*(Cn[2:] - 2*Cn[1:-1] + Cn[:-2])
-    C2[0], C2[-1] = cL, cR
-    return C2
-
-# ---- time loop
+# FTCS step
 for k in range(1, nsteps+1):
-    C = ftcs(C, r, cL, cR)
-    fluxL[k] = -D*(C[1]-C[0])/dx
+    Cn = C.copy()
+    C[1:-1] = Cn[1:-1] + r*(Cn[2:] - 2*Cn[1:-1] + Cn[:-2])
+    C[0], C[-1] = cL, cR
+    fluxL[k] = -Dv * (C[1] - C[0]) / dx
     if k in save_ids:
         profiles.append((times[k], C.copy()))
 
-# analytic steady state (linear, constant D)
+# steady state (constant D -> linear)
 C_ss  = cL + (cR - cL)*(x/L)
 l2err = float(np.sqrt(np.mean((C - C_ss)**2)))
 
-# ---- plots
+# plots (simple)
 plt.figure()
 for t, Ck in profiles:
-    plt.plot(x, Ck, label=f"t={t:.0f}s")
-plt.xlabel("x [m]"); plt.ylabel("C [mol/m^3]")
-plt.legend(); plt.tight_layout()
-plt.savefig("profiles.png", dpi=200)
+    plt.plot(x, Ck, label=f"t={int(t)}s")
+plt.xlabel("x [m]"); plt.ylabel("C [mol/m^3]"); plt.legend(); plt.tight_layout()
+plt.show()
 
 plt.figure()
 plt.plot(times, fluxL)
-plt.xlabel("time [s]"); plt.ylabel("J_left [mol/m^2/s]")
-plt.tight_layout()
-plt.savefig("flux_time.png", dpi=200)
+plt.xlabel("time [s]"); plt.ylabel("J_left [mol/m^2/s]"); plt.tight_layout()
+plt.show()
 
-# ---- summary printout
-print("\n=== Sprint 1 (1D diffusion) ===")
-print(f"T={T} K, L={L:.1e} m, Nx={Nx}, dx={dx:.2e}")
-print(f"S={S:.2e}, D={D:.2e}")
-print(f"cL={cL:.2e}, cR={cR:.2e}")
-print(f"dt={dt:.2e} s, r={r:.2f}  (<=0.5 ok)")
-print(f"L2 error vs linear SS = {l2err:.2e}")
-print("obs: FTCS stable, profile → linear, flux → plateau")
+# quick log
+print(f"r={r:.3f}, D={Dv:.3e} m^2/s, cL={cL:.3e}, cR={cR:.3e}, L2={l2err:.2e}")
 
 
